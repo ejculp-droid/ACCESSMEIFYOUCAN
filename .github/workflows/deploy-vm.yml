@@ -1,0 +1,80 @@
+name: Deploy Azure VM
+
+on:
+  workflow_dispatch:
+    inputs:
+      resourceGroup:
+        description: 'Azure Resource Group Name'
+        required: true
+        default: 'myResourceGroup'
+      location:
+        description: 'Azure Location'
+        required: true
+        default: 'eastus'
+        type: choice
+        options:
+          - eastus
+          - westus
+          - centralus
+          - westeurope
+          - northeurope
+          - southeastasia
+      vmName:
+        description: 'VM Name'
+        required: true
+        default: 'myFreeVM'
+
+env:
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Create Resource Group
+      run: |
+        az group create \
+          --name ${{ github.event.inputs.resourceGroup }} \
+          --location ${{ github.event.inputs.location }}
+
+    - name: Deploy VM using Bicep
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        resourceGroupName: ${{ github.event.inputs.resourceGroup }}
+        template: ./azuredeploy.bicep
+        parameters: >
+          vmName=${{ github.event.inputs.vmName }}
+          adminUsername=${{ secrets.VM_ADMIN_USERNAME }}
+          adminPassword=${{ secrets.VM_ADMIN_PASSWORD }}
+          location=${{ github.event.inputs.location }}
+
+    - name: Get VM Information
+      id: vm-info
+      run: |
+        PUBLIC_IP=$(az vm show -d \
+          --resource-group ${{ github.event.inputs.resourceGroup }} \
+          --name ${{ github.event.inputs.vmName }} \
+          --query publicIps -o tsv)
+        echo "public-ip=$PUBLIC_IP" >> $GITHUB_OUTPUT
+        echo "### VM Deployed Successfully! 🚀" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **VM Name**: ${{ github.event.inputs.vmName }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Resource Group**: ${{ github.event.inputs.resourceGroup }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Location**: ${{ github.event.inputs.location }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Public IP**: $PUBLIC_IP" >> $GITHUB_STEP_SUMMARY
+        echo "- **SSH Command**: \`ssh ${{ secrets.VM_ADMIN_USERNAME }}@$PUBLIC_IP\`" >> $GITHUB_STEP_SUMMARY
+
+    - name: Azure Logout
+      run: |
+        az logout
+      if: always()

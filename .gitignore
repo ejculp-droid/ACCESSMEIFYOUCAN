@@ -1,0 +1,28 @@
+# Azure deployment outputs
+*.log
+*.zip
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Local environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
