@@ -115,7 +115,7 @@ def test_request_service_success(mock_dynamodb):
     class MockContext:
         request_id = 'test-request-123'
     
-    response = request_service(event)
+    response = request_service(event, MockContext())
     
     assert response['statusCode'] == 200
     body_data = json.loads(response['body'])
@@ -149,7 +149,11 @@ def test_request_service_unavailable(mock_dynamodb):
         }
     }
     
-    response = request_service(event)
+    # Mock context
+    class MockContext:
+        request_id = 'test-request-123'
+    
+    response = request_service(event, MockContext())
     
     assert response['statusCode'] == 403
     body_data = json.loads(response['body'])

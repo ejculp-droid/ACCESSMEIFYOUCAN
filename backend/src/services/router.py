@@ -42,7 +42,7 @@ def lambda_handler(event, context):
         if http_method == 'GET' and path.endswith('/services'):
             return get_services(event)
         elif http_method == 'POST' and path.endswith('/services/request'):
-            return request_service(event)
+            return request_service(event, context)
         else:
             return response(400, {'error': 'Invalid endpoint'})
             
@@ -82,7 +82,7 @@ def get_services(event):
         print(f"Error getting services: {str(e)}")
         return response(500, {'error': 'Failed to retrieve services'})
 
-def request_service(event):
+def request_service(event, context):
     """
     Route service request to appropriate AI agent
     """

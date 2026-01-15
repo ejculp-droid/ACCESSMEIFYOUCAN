@@ -27,7 +27,7 @@ Resources:
         - Name: email
           AttributeDataType: String
           Required: true
-        - Name: membershipTier
+        - Name: custom:membershipTier
           AttributeDataType: String
           Mutable: true
       Policies:
