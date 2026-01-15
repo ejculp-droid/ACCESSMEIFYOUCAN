@@ -43,7 +43,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-05-01' = {
           protocol: 'Tcp'
           access: 'Allow'
           direction: 'Inbound'
-          sourceAddressPrefix: '*'
+          sourceAddressPrefix: '*'  // WARNING: Open to all IPs. For production, restrict to specific IPs or use Azure Bastion
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
           destinationPortRange: '22'

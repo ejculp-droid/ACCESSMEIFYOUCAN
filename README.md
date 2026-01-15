@@ -86,7 +86,7 @@ az deployment group create \
   --template-file azuredeploy.bicep \
   --parameters vmName=myFreeVM \
                adminUsername=azureuser \
-               adminPassword='YourSecurePassword123!'
+               adminPassword='YourSecureP@ssw0rd123!'  # WARNING: Don't put passwords in shell history. Use --parameters @file.json or prompt for password
 ```
 
 ### Method 3: GitHub Actions Deployment
@@ -131,6 +131,36 @@ The deployment includes:
 - Network Security Group (NSG) with rules for SSH (port 22) and HTTP (port 80)
 - Password authentication enabled (can be modified for SSH key auth)
 - Standard tier networking components
+
+### Security Best Practices
+
+⚠️ **Important Security Notes:**
+
+1. **SSH Access**: By default, SSH is open to all IP addresses (*). For production:
+   - Restrict NSG rule to your specific IP address
+   - Use Azure Bastion for secure access without public IPs
+   - Consider using SSH key authentication instead of passwords
+
+2. **Password Management**:
+   - Never put passwords directly in command lines (they appear in shell history)
+   - Use Azure Key Vault for production secrets
+   - Change default passwords immediately after deployment
+   - Use strong passwords with 12+ characters
+
+3. **Network Isolation**:
+   - Consider deploying in a private subnet with no public IP
+   - Use Azure Bastion or VPN for secure access
+   - Enable Just-In-Time (JIT) VM access in Azure Security Center
+
+4. **Update Regularly**:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+
+5. **Monitor and Log**:
+   - Enable Azure Monitor and Log Analytics
+   - Set up alerts for suspicious activity
+   - Review NSG flow logs regularly
 
 ## Connecting to Your VM
 

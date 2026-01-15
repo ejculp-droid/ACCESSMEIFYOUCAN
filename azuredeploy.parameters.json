@@ -9,7 +9,7 @@
       "value": "azureuser"
     },
     "adminPassword": {
-      "value": "REPLACE_WITH_SECURE_PASSWORD"
+      "value": "CHANGEME-ThisIsNotAValidPassword-CHANGEME"
     },
     "location": {
       "value": "eastus"

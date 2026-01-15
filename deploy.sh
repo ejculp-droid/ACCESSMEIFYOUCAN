@@ -52,6 +52,7 @@ ADMIN_USERNAME=${ADMIN_USERNAME:-azureuser}
 
 # Prompt for admin password
 echo "Enter admin password (min 12 characters, must include uppercase, lowercase, number, and special character):"
+echo "NOTE: Password will not be displayed for security. It's stored temporarily in memory during deployment."
 read -s ADMIN_PASSWORD
 echo ""
 
