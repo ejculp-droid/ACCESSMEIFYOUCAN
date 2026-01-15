@@ -1,7 +1,21 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.39.26.7824",
+      "templateHash": "657041898224039049"
+    }
+  },
   "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources"
+      }
+    },
     "vmName": {
       "type": "string",
       "defaultValue": "myFreeVM",
@@ -20,13 +34,6 @@
       "type": "securestring",
       "metadata": {
         "description": "Admin password for the VM"
-      }
-    },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources"
       }
     },
     "vmSize": {
@@ -48,11 +55,11 @@
     }
   },
   "variables": {
-    "nicName": "[concat(parameters('vmName'), '-nic')]",
-    "vnetName": "[concat(parameters('vmName'), '-vnet')]",
+    "nicName": "[format('{0}-nic', parameters('vmName'))]",
+    "vnetName": "[format('{0}-vnet', parameters('vmName'))]",
     "subnetName": "default",
-    "publicIPName": "[concat(parameters('vmName'), '-pip')]",
-    "nsgName": "[concat(parameters('vmName'), '-nsg')]",
+    "publicIPName": "[format('{0}-pip', parameters('vmName'))]",
+    "nsgName": "[format('{0}-nsg', parameters('vmName'))]",
     "addressPrefix": "10.0.0.0/16",
     "subnetPrefix": "10.0.0.0/24"
   },
@@ -110,9 +117,6 @@
       "apiVersion": "2023-05-01",
       "name": "[variables('vnetName')]",
       "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
-      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -130,17 +134,16 @@
             }
           }
         ]
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+      ]
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2023-05-01",
       "name": "[variables('nicName')]",
       "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName'))]",
-        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
-      ],
       "properties": {
         "ipConfigurations": [
           {
@@ -156,16 +159,17 @@
             }
           }
         ]
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+      ]
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2023-07-01",
       "name": "[parameters('vmName')]",
       "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
-      ],
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
@@ -199,7 +203,10 @@
             }
           ]
         }
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+      ]
     }
   ],
   "outputs": {
@@ -209,7 +216,7 @@
     },
     "publicIP": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName'))).ipAddress]"
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName')), '2023-05-01').ipAddress]"
     },
     "adminUsername": {
       "type": "string",
@@ -217,7 +224,7 @@
     },
     "sshCommand": {
       "type": "string",
-      "value": "[concat('ssh ', parameters('adminUsername'), '@', reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName'))).ipAddress)]"
+      "value": "[format('ssh {0}@{1}', parameters('adminUsername'), reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName')), '2023-05-01').ipAddress)]"
     }
   }
 }
