@@ -1,0 +1,22 @@
+{
+  "name": "accessmeifyoucan-backend",
+  "version": "1.0.0",
+  "description": "Multi-tenant SaaS platform backend for AI-powered professional services",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "deploy": "sam deploy --guided"
+  },
+  "keywords": ["saas", "ai", "multi-tenant", "aws"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1000.0",
+    "jsonwebtoken": "^9.0.0",
+    "axios": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "aws-sam-cli": "^1.0.0"
+  }
+}
