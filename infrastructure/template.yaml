@@ -1,0 +1,231 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Multi-tenant SaaS Platform for AI-powered Professional Services
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.11
+    Environment:
+      Variables:
+        USER_POOL_ID: !Ref UserPool
+        USER_POOL_CLIENT_ID: !Ref UserPoolClient
+        SERVICES_TABLE: !Ref ServicesTable
+        SUBSCRIPTIONS_TABLE: !Ref SubscriptionsTable
+
+Resources:
+  # Cognito User Pool for Authentication
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: AccessMeIfYouCanUserPool
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Required: true
+        - Name: membershipTier
+          AttributeDataType: String
+          Mutable: true
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref UserPool
+      ClientName: AccessMeIfYouCanClient
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_SRP_AUTH
+
+  # DynamoDB Tables
+  ServicesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Services
+      AttributeDefinitions:
+        - AttributeName: serviceId
+          AttributeType: S
+        - AttributeName: category
+          AttributeType: S
+      KeySchema:
+        - AttributeName: serviceId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: CategoryIndex
+          KeySchema:
+            - AttributeName: category
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
+  SubscriptionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Subscriptions
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
+  # API Gateway
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !GetAtt UserPool.Arn
+
+  # Lambda Functions
+  AuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/src/auth/
+      Handler: handler.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - cognito-idp:*
+              Resource: !GetAtt UserPool.Arn
+      Events:
+        Register:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /auth/register
+            Method: post
+            Auth:
+              Authorizer: NONE
+        Login:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /auth/login
+            Method: post
+            Auth:
+              Authorizer: NONE
+
+  ServiceRouterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/src/services/
+      Handler: router.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ServicesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SubscriptionsTable
+      Events:
+        GetServices:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /services
+            Method: get
+        RequestService:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /services/request
+            Method: post
+
+  AgentOrchestratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/src/agents/
+      Handler: orchestrator.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBReadPolicy:
+            TableName: !Ref ServicesTable
+      Events:
+        ProcessRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /agents/process
+            Method: post
+
+  GovernanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/src/governance/
+      Handler: validator.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBReadPolicy:
+            TableName: !Ref SubscriptionsTable
+      Events:
+        ValidateRequest:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /governance/validate
+            Method: post
+
+  SubscriptionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/src/subscriptions/
+      Handler: manager.lambda_handler
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SubscriptionsTable
+      Events:
+        GetSubscription:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /subscription
+            Method: get
+        UpdateSubscription:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGateway
+            Path: /subscription
+            Method: put
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/"
+  UserPoolId:
+    Description: "Cognito User Pool ID"
+    Value: !Ref UserPool
+  UserPoolClientId:
+    Description: "Cognito User Pool Client ID"
+    Value: !Ref UserPoolClient
