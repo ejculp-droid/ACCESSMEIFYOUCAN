@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ownership Selection &amp; Governance Memorandum</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --paper: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --brand: #0f4c81;
+      --brand-2: #0b3356;
+      --line: #d8e0eb;
+      --accent: #e9f2fb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eaf1f8 0%, var(--bg) 220px);
+      line-height: 1.45;
+    }
+
+    .page {
+      width: min(1120px, 94vw);
+      margin: 32px auto 56px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 12px 32px rgba(15, 76, 129, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 28px 34px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: #fff;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      letter-spacing: 0.2px;
+    }
+
+    .header p {
+      margin: 4px 0;
+      opacity: 0.95;
+      font-size: 0.96rem;
+    }
+
+    .content {
+      padding: 28px 34px 34px;
+    }
+
+    h2 {
+      margin: 28px 0 10px;
+      font-size: 1.2rem;
+      color: var(--brand-2);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 20px 0 8px;
+      font-size: 1rem;
+      color: #193853;
+    }
+
+    p {
+      margin: 10px 0;
+      font-size: 0.95rem;
+    }
+
+    .note {
+      background: var(--accent);
+      border-left: 4px solid var(--brand);
+      padding: 12px 14px;
+      margin: 12px 0;
+      border-radius: 6px;
+      color: #12344f;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f2f7fc;
+      color: #12344f;
+      text-align: left;
+      font-weight: 650;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fbfdff;
+    }
+
+    ul, ol {
+      margin: 8px 0 10px 22px;
+      padding: 0;
+      font-size: 0.95rem;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .footnote {
+      margin-top: 24px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .footnote a { color: var(--brand); }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        margin: 0;
+      }
+
+      .header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header class="header">
+      <h1>Ownership Selection &amp; Governance Memorandum</h1>
+      <p><strong>Transaction:</strong> NewCo LLC – GFP / Somdal Combination</p>
+      <p><strong>Prepared For:</strong> Kevin Gros, Amy Connor‑Flores, Lloyd Positerry II, Timothy Allen, Christian Elberson</p>
+      <p><strong>Date:</strong> 17 February 2026 (America/New_York)</p>
+    </header>
+
+    <section class="content">
+      <h2>1. Financial Performance Summary</h2>
+      <p>The proposed combination brings together Somdal Associates and Gros Flores Positerry, LLC (“GFP”) to form NewCo LLC. The table below summarises the most recent financial performance for each business and the combined entity.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Somdal</th>
+            <th>GFP</th>
+            <th>Combined</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2025 Revenue</td><td>$2.36 M</td><td>$7.44 M</td><td>$9.80 M</td></tr>
+          <tr><td>4‑Year CAGR</td><td>9.9 %</td><td>50.8 %</td><td>35.4 %</td></tr>
+          <tr><td>EBITDA (2‑yr avg)</td><td>$0.36 M</td><td>$2.07 M</td><td>$2.43 M</td></tr>
+          <tr><td>EBITDA Margin</td><td>15.35 %</td><td>30.06 %</td><td>26.32 %</td></tr>
+        </tbody>
+      </table>
+
+      <p class="note"><strong>Narrative.</strong> GFP has grown rapidly and contributes the majority of revenue and earnings, while Somdal brings a stable, profitable platform with strong institutional relationships. The combined firm would have a 26% EBITDA margin and a diversified client base, positioning NewCo as a competitive architecture/engineering firm in NAICS 541310.</p>
+
+      <h2>2. Ownership Model Evaluation</h2>
+      <p>Three methodologies were analysed to determine how membership units should be allocated in NewCo. Each method uses a 1,000‑unit capitalisation structure for comparability.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Chris Units (out of 1,000)</th>
+            <th>Chris %</th>
+            <th>GFP %</th>
+            <th>Basis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1 – Fair‑Value (FMV)</td>
+            <td>158.8</td>
+            <td>15.88 %</td>
+            <td>84.12 %</td>
+            <td>Ascertain the fair value of each firm using a weighted reconciliation of discounted cash flow (45%), market multiple (EBITDA multiple, 35%) and adjusted net assets (20%). This is compliant with ASC 805/ASC 820 guidance for business combinations.</td>
+          </tr>
+          <tr>
+            <td>2 – Revenue</td>
+            <td>240.8</td>
+            <td>24.08 %</td>
+            <td>75.92 %</td>
+            <td>Allocate ownership strictly on 2025 accrual revenue ($2.36 M / $9.80 M). Simple and transparent, but ignores profitability, capital structure and risk.</td>
+          </tr>
+          <tr>
+            <td>3 – Hybrid</td>
+            <td>183.9</td>
+            <td>18.39 %</td>
+            <td>81.61 %</td>
+            <td>Blend 70% on each firm’s share of combined normalised EBITDA ($0.36 M + $2.07 M) and 30% on a strategic scoring framework (client relationships, service capabilities, talent &amp; depth, reputation, geography and technology).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Comparison.</strong> The revenue model materially increases Somdal’s ownership relative to fair value; however, it undervalues GFP’s margin strength and does not meet the requirements of ASC 805‑60 for joint‑venture accounting. The hybrid model attempts to adjust the fair value for strategic factors but remains subjective. The fair‑value model aligns economic ownership with the market participant value of each business and is defensible under accounting and valuation standards.</p>
+
+      <h2>3. Recommended Model: Fair Value with Earnout Enhancement</h2>
+      <p>The preferred structure is Model 1 (Fair‑Value‑Based Exchange Ratio) with an earnout pool reserved for Chris to address the gap between Somdal’s strategic contribution (about 44% of the qualitative score) and its 15.88% fair‑value interest. Key reasons for this recommendation include:</p>
+      <ol>
+        <li><strong>Regulatory and audit defensibility.</strong> Using concluded fair values under ASC 805/ASC 820 ensures that ownership percentages reflect the economic value of assets contributed. This approach aligns with professional standards and is suitable for GAAP purchase accounting and tax reporting.</li>
+        <li><strong>Alignment with earnings power and risk.</strong> A weighted reconciliation of DCF, EBITDA multiple and adjusted net assets captures each firm’s earning capacity, margin profile, growth potential and risk. The revenue model ignores these factors, while the hybrid model introduces subjective scoring that may be difficult to defend.</li>
+        <li><strong>Performance‑based upside.</strong> Rather than distorting the base exchange ratio, the earnout pool allows Chris to earn up to 50 additional units (5% of authorised units) if the Somdal division meets predefined revenue and EBITDA targets. This ensures that any increase in ownership is tied to measurable performance.</li>
+      </ol>
+
+      <h2>4. Preferred Ownership Structure</h2>
+      <h3>4.1 Entity &amp; Capital Structure</h3>
+      <ul>
+        <li><strong>Entity:</strong> NewCo LLC (final name TBD) organised under Louisiana law.</li>
+        <li><strong>Federal Tax Status:</strong> Elect S‑corporation status. S‑corp income and losses pass through to members’ personal tax returns rather than being taxed at the entity level; members therefore pay taxes on their share of income regardless of whether cash is distributed.</li>
+        <li><strong>Authorised Units:</strong> 1,000 common membership units with identical rights to distributions and liquidation proceeds (single class) to maintain S‑corp eligibility.</li>
+        <li><strong>Issued at Closing:</strong> 950 units issued at closing in proportion to each member’s fair‑value contribution. 50 units (5%) reserved in an earnout pool for Chris.</li>
+      </ul>
+
+      <h3>4.2 Initial Ownership at Closing</h3>
+      <p>The following table shows the cap table at closing (950 issued units) and on a fully authorised basis (1,000 units) reflecting the 5% earnout pool. Concluded equity values are derived from the fair‑value analysis (combined equity value $11,991,639).</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Units Issued</th>
+            <th>% of Issued (950)</th>
+            <th>Fully Authorised % (out of 1,000)</th>
+            <th>Concluded Equity Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Chris (Somdal)</td><td>150.8</td><td>15.88 %</td><td>15.08 %</td><td>$1,904,145</td></tr>
+          <tr><td>Kevin</td><td>467.5</td><td>49.21 %</td><td>46.75 %</td><td>$5,901,184</td></tr>
+          <tr><td>Amy</td><td>203.8</td><td>21.45 %</td><td>20.38 %</td><td>$2,572,311</td></tr>
+          <tr><td>Lloyd</td><td>119.9</td><td>12.62 %</td><td>11.99 %</td><td>$1,513,124</td></tr>
+          <tr><td>Tim</td><td>8.0</td><td>0.84 %</td><td>0.80 %</td><td>$100,875</td></tr>
+          <tr><td><strong>Total Issued</strong></td><td><strong>950.0</strong></td><td><strong>100 %</strong></td><td><strong>95 %</strong></td><td><strong>$11,991,639</strong></td></tr>
+        </tbody>
+      </table>
+
+      <p>The remaining 50 authorised units form the earnout pool.</p>
+
+      <h3>4.3 Earnout Structure – 5% Single‑Class Holdback</h3>
+      <ul>
+        <li><strong>Equity‑classified:</strong> Earnout units are common units identical to existing units; no cash is paid.</li>
+        <li><strong>Performance‑linked:</strong> Units vest only if the Somdal division meets revenue and EBITDA thresholds. Both metrics must be met for units to vest in a given year.</li>
+        <li><strong>Dilutive to all members:</strong> Issued units come from the earnout pool and dilute all members pro rata.</li>
+        <li><strong>Time‑bounded:</strong> Performance tests run through 31 December 2028; unearned units are forfeited and can be reallocated for other incentive programmes.</li>
+      </ul>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Year Ending</th>
+            <th>Revenue Target</th>
+            <th>EBITDA Target</th>
+            <th>Units Earned (if both met)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>31 Dec 2026</td><td>$2,500,000</td><td>$250,000</td><td>15.0</td></tr>
+          <tr><td>31 Dec 2027</td><td>$2,700,000</td><td>$300,000</td><td>17.5</td></tr>
+          <tr><td>31 Dec 2028</td><td>$2,900,000</td><td>$350,000</td><td>17.5</td></tr>
+        </tbody>
+      </table>
+
+      <p>At closing, Chris holds 150.8 units (15.08% of fully authorised). If all earnout milestones are met, he will hold 200.8 units (20.08%). Earnout achievements are certified by an independent accountant within 60 days after year‑end, and units are issued within 30 days of certification.</p>
+
+      <h2>5. Governance Philosophy &amp; Structure</h2>
+      <p>The governance framework balances decision‑making efficiency with protection of minority interests and ensures that major strategic decisions require broad consensus.</p>
+
+      <h3>5.1 Board of Managers</h3>
+      <ul>
+        <li><strong>Composition:</strong> 5 seats: Kevin (2 seats, Chair), Amy (1 seat), Lloyd (1 seat), Chris (1 seat). Kevin’s second seat may serve as either (i) a tie‑breaking vote he controls when the board is split, or (ii) an assignable seat to another manager, advisor or strategic investor at the board’s discretion, while always controlled by Kevin’s nomination.</li>
+        <li><strong>Decision Thresholds:</strong></li>
+      </ul>
+      <ul>
+        <li><strong>Ordinary business:</strong> simple majority (3 of 5). Covers annual budgets, contracts within thresholds, hiring/firing non‑principal staff and routine capex within budget.</li>
+        <li><strong>Major transactions:</strong> super‑majority (4 of 5). Includes transactions &gt;$500,000, material borrowing, acquisitions and off‑budget initiatives.</li>
+        <li><strong>Sale or change of control:</strong> unanimous (5 of 5). Any sale of substantially all assets, mergers that dilute existing members below 50% or liquidation requires unanimous approval.</li>
+      </ul>
+
+      <h3>5.2 Management Structure</h3>
+      <ul>
+        <li><strong>Chief Executive Officer / Managing Member:</strong> Kevin. Responsible for overall strategy, culture, capital decisions and external relationships.</li>
+        <li><strong>President – GFP Division:</strong> Amy or Lloyd (to be designated). Oversees P&amp;L of legacy GFP markets, operations and client delivery.</li>
+        <li><strong>President – Somdal Division:</strong> Chris. Responsible for P&amp;L of the Somdal division (Shreveport/Northwest Louisiana) and earnout performance.</li>
+        <li><strong>Chief Financial Officer:</strong> To be hired. Handles consolidated reporting, treasury, budgeting and S‑corp compliance.</li>
+      </ul>
+
+      <h2>6. Profit/Loss Allocation Methodology</h2>
+      <h3>6.1 Pro‑Rata Allocation</h3>
+      <p>NewCo, as an S‑corporation, allocates all income, loss, deductions and credits pro rata based on units held. For example, if NewCo earns net income of $2.0 M in 2026 with 950 units outstanding (pre‑earnout), each unit would represent about $2,105 of income. A holder of 150.8 units would be allocated roughly $317 K; Kevin would be allocated $984 K; and so on. Members pay tax on their share of income when it is earned, regardless of whether cash distributions are made.</p>
+
+      <h3>6.2 Distribution Policy</h3>
+      <p>Because S‑corp shareholders are taxed on their allocated income regardless of cash received, NewCo will implement a two‑tier distribution policy:</p>
+      <ol>
+        <li><strong>Mandatory Tax Distributions.</strong> Each quarter the board will target cash distributions equal to approximately 40–45% of the taxable income allocated to each member. This is designed to provide sufficient cash to cover estimated federal and state tax liabilities. Distributions must be proportional to ownership percentage and may not be skewed to benefit particular members.</li>
+        <li><strong>Discretionary Profit Distributions.</strong> After operating expenses, debt service, reserves and tax distributions, the board may declare additional distributions based on cash flow. Ordinary distributions require a simple majority; extraordinary distributions (e.g., large one‑time payments) require supermajority approval. Any such distributions will be pro rata among members, as S‑corp rules generally prohibit disproportionate or preferred distributions.</li>
+      </ol>
+      <p class="note"><strong>Notes on S‑Corp Distributions.</strong> Distributions from an S‑corp are generally tax‑free to the extent of a member’s stock basis; distributions exceeding basis are taxed as capital gains. S‑corp income is taxed to shareholders when earned, not when distributed, and distributions do not incur self‑employment tax. Members must therefore track basis and ensure distributions remain within basis.</p>
+
+      <h2>7. Economic Principles &amp; Operating Framework</h2>
+      <h3>7.1 Separate Division P&amp;L Tracking</h3>
+      <p>Each division (Somdal and GFP) will maintain a separate income statement to support management accountability, earnout measurement and bonus determination. The division P&amp;L includes:</p>
+      <ul>
+        <li>Revenue – division‑specific billing.</li>
+        <li>Direct labour costs – salaries, benefits, payroll taxes for division staff.</li>
+        <li>Allocated overhead – rent, admin, technology and corporate services allocated based on revenue percentage.</li>
+        <li>Division‑specific expenses – travel, marketing and project costs.</li>
+        <li>Division EBITDA – calculated as revenue minus direct labour, allocated overhead and division expenses.</li>
+      </ul>
+
+      <h3>7.2 Shared Overhead Allocation</h3>
+      <p>Corporate overhead – occupancy costs, executive compensation, finance, HR, IT, insurance and professional services – will be allocated to divisions based on their share of revenue and reviewed annually. This ensures each division bears a fair share of shared costs.</p>
+
+      <h3>7.3 Capital Allocation</h3>
+      <p>Growth capital will be deployed based on return on investment (ROI) and strategic fit rather than ownership percentage. The board approves an annual capital budget by division. Capital projects exceeding $100,000 require individual board approval with ROI analysis; emergency expenditures &lt;$50,000 may be approved by the Managing Member.</p>
+
+      <h3>7.4 Compensation Philosophy</h3>
+      <ul>
+        <li><strong>Principals.</strong> Members active in the business receive market‑rate W‑2 salaries. Annual bonuses are tied 50% to combined EBITDA versus budget, 30% to division performance versus budget and 20% to individual performance (leadership, business development). Equity distributions are based solely on unit ownership.</li>
+        <li><strong>Employees.</strong> Compensation is benchmarked to market. Bonuses are tied to utilisation, project profitability and client satisfaction. The company will offer competitive benefits, including a 401(k) match.</li>
+      </ul>
+
+      <h2>8. Economic Autonomy &amp; Decision‑Making</h2>
+      <h3>8.1 Economic Autonomy Boundaries</h3>
+      <p><strong>Chris (Somdal Division President)</strong></p>
+      <ul>
+        <li><strong>Autonomy without board approval:</strong> project selection and client relationships within existing Somdal clients; hiring/firing Somdal staff (non‑principals); operating decisions and expenses under $50,000 per transaction; vendor contracts under $50,000 annually.</li>
+        <li><strong>Requires Managing Member approval:</strong> projects exceeding $100,000 contract value; operating expenses between $50,000 and $100,000; entering new markets or service lines.</li>
+        <li><strong>Requires Board approval:</strong> projects over $500,000; hiring principals or equity‑track staff; office leases or relocations; capital expenditures over $100,000; client terminations representing more than $100,000 of annual revenue; any debt financing.</li>
+      </ul>
+
+      <p><strong>Kevin/GFP Leadership</strong></p>
+      <ul>
+        <li><strong>Autonomy without board approval:</strong> pursuit and execution of public‑sector contracts; management of historic tax credit projects; day‑to‑day management of GFP division staff; operating decisions and expenses under $100,000 per transaction; vendor contracts under $100,000 annually.</li>
+        <li><strong>Requires Board approval:</strong> projects over $500,000; hiring principals or equity candidates; office leases or relocations; capital expenditures over $100,000; material contract terminations; debt financing over $250,000; resolution of cross‑division resource disputes.</li>
+      </ul>
+
+      <h3>8.2 Decision‑Making Matrix</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Decision Type</th>
+            <th>Amount/Scope</th>
+            <th>Authority</th>
+            <th>Process</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Project acceptance</td><td>&lt;$100K</td><td>Division president</td><td>No further approval</td></tr>
+          <tr><td></td><td>$100K–$500K</td><td>Managing Member (Kevin)</td><td>Email/phone approval</td></tr>
+          <tr><td></td><td>&gt;$500K</td><td>Board majority</td><td>Formal vote</td></tr>
+          <tr><td>Hiring</td><td>Non‑principal staff</td><td>Division president</td><td>Budget compliance required</td></tr>
+          <tr><td></td><td>Principal/equity track</td><td>Board supermajority</td><td>4 of 5 votes required</td></tr>
+          <tr><td>Operating expenses</td><td>&lt;$50K</td><td>Division president</td><td>Within approved budget</td></tr>
+          <tr><td></td><td>$50K–$100K</td><td>Managing Member</td><td>Written approval</td></tr>
+          <tr><td></td><td>&gt;$100K</td><td>Board majority</td><td>Formal vote</td></tr>
+          <tr><td>Capital expenditures</td><td>&lt;$50K</td><td>Managing Member</td><td>Email approval</td></tr>
+          <tr><td></td><td>$50K–$100K</td><td>Board majority</td><td>Formal vote</td></tr>
+          <tr><td></td><td>&gt;$100K</td><td>Board majority</td><td>ROI analysis required</td></tr>
+          <tr><td>Debt financing</td><td>&lt;$250K</td><td>Managing Member</td><td>Board notified</td></tr>
+          <tr><td></td><td>&gt;$250K</td><td>Board supermajority</td><td>4 of 5 votes</td></tr>
+          <tr><td>Distributions</td><td>Quarterly distributions within policy</td><td>Board majority</td><td>Simple majority</td></tr>
+          <tr><td></td><td>Special distributions outside policy</td><td>Board supermajority</td><td>4 of 5 votes</td></tr>
+          <tr><td>Sale of company</td><td>Any amount</td><td>Board unanimous</td><td>All 5 members</td></tr>
+          <tr><td>Member termination</td><td>Any cause</td><td>Board supermajority</td><td>Buy‑sell provisions apply</td></tr>
+        </tbody>
+      </table>
+
+      <h3>8.3 Conflict Resolution and Buy‑Sell Framework</h3>
+      <ul>
+        <li>Division‑level disputes (e.g., project staffing, resource allocation within a division) are escalated to the division president and then to the Managing Member; resolution target is five business days.</li>
+        <li>Cross‑division disputes (e.g., client ownership conflicts, overhead allocation disagreements) are mediated by the board at the next meeting (or a special meeting within ten days).</li>
+        <li>Board deadlock (failure to achieve required vote after two attempts) triggers third‑party mediation within 30 days; costs are borne pro rata based on unit ownership. If mediation fails, the buy‑sell provisions may apply.</li>
+        <li>Member disputes (compensation, breach of operating agreement, equity valuation) follow the operating agreement’s buy‑sell process: good‑faith negotiation (15 days), mediation (30 days) and binding arbitration if necessary. Voluntary exits permit sale of units to the company or other members at fair market value with structured payout. Involuntary terminations require a supermajority vote and apply discounts for lack of control. A Texas‑shoot‑out provision can be used to resolve deadlock by forcing one party to buy or sell at a stated price.</li>
+      </ul>
+
+      <h2>9. Summary</h2>
+      <p>The proposed combination of Somdal and GFP creates a strong regional architecture and engineering firm with diversified revenue, robust margins and complementary capabilities. By adopting a fair‑value based exchange ratio, NewCo aligns ownership with economic value and meets ASC 805/820 requirements. The earnout pool fairly compensates Chris for Somdal’s strategic contributions while incentivising future performance. A 5‑member board with tiered decision thresholds preserves operational efficiency and minority protection. As an S‑corporation, NewCo allocates income and loss pro rata and implements mandatory tax distributions to ensure members have cash to pay taxes. The economic autonomy boundaries and decision‑making matrix provide clear governance and accountability, while the economic principles ensure disciplined capital allocation, transparent division reporting and alignment between compensation and performance.</p>
+
+      <div class="footnote">
+        <p><strong>[1] S‑Corp Distributions 2026: Tax Rules, Basis &amp; Reporting</strong><br />
+        <a href="https://www.sdocpa.com/s-corp-distributions-tax-rules/" target="_blank" rel="noopener noreferrer">https://www.sdocpa.com/s-corp-distributions-tax-rules/</a></p>
+      </div>
+    </section>
+  </article>
+</body>
+</html>
